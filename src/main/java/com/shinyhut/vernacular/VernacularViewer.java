@@ -2,6 +2,12 @@ package com.shinyhut.vernacular;
 
 import com.shinyhut.vernacular.client.VernacularClient;
 import com.shinyhut.vernacular.client.VernacularConfig;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+import msopentech.thali.toronionproxy.JavaOnionProxyContext;
+import msopentech.thali.toronionproxy.JavaOnionProxyManager;
+import msopentech.thali.toronionproxy.OnionProxyManager;
+import msopentech.thali.toronionproxy.OnionProxyThread;
 
 import javax.swing.*;
 import javax.swing.event.AncestorEvent;
@@ -10,6 +16,8 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.*;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import static com.shinyhut.vernacular.client.rendering.ColorDepth.BPP_16_TRUE;
 import static com.shinyhut.vernacular.client.rendering.ColorDepth.BPP_8_INDEXED;
@@ -27,6 +35,7 @@ import static java.lang.System.exit;
 import static java.lang.Thread.sleep;
 import static javax.swing.JOptionPane.*;
 
+@Slf4j
 public class VernacularViewer extends JFrame {
 
     private VernacularConfig config;
@@ -368,10 +377,18 @@ public class VernacularViewer extends JFrame {
     }
 
     public static void main(String[] args) {
+        log.info("Starting tor...");
+
+        OnionProxyThread t = new OnionProxyThread();
+        t.start();
+
         invokeLater(() -> {
             VernacularViewer viewer = new VernacularViewer();
             viewer.setVisible(true);
         });
     }
+
+
+
 
 }

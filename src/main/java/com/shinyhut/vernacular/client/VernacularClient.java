@@ -11,7 +11,10 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.Socket;
+import java.net.SocketAddress;
 
 import static java.awt.event.KeyEvent.*;
 import static java.util.stream.IntStream.range;
@@ -260,6 +263,10 @@ public class VernacularClient {
     }
 
     private void createSession(String host, int port) throws IOException, VncException {
+
+        System.setProperty("socksProxyHost", "127.0.0.1");
+        System.setProperty("socksProxyPort", "9050");
+
         Socket socket = new Socket(host, port);
         InputStream in = new BufferedInputStream(socket.getInputStream());
         OutputStream out = socket.getOutputStream();
