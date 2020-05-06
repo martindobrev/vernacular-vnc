@@ -348,10 +348,10 @@ public abstract class OnionProxyManager {
         onionProxyContext.setEnvironmentArgsAndWorkingDirectoryForStart(processBuilder);
         Process torProcess = null;
         try {
-//            torProcess = Runtime.getRuntime().exec(cmd, env, workingDirectory);
+        //    torProcess = Runtime.getRuntime().exec(cmd, env, workingDirectory);
             torProcess = processBuilder.start();
             CountDownLatch controlPortCountDownLatch = new CountDownLatch(1);
-            eatStream(torProcess.getInputStream(), false, controlPortCountDownLatch);
+            eatStream(torProcess.getInputStream(), true, controlPortCountDownLatch);
             eatStream(torProcess.getErrorStream(), true, null);
 
             // On platforms other than Windows we run as a daemon and so we need to wait for the process to detach
@@ -373,7 +373,7 @@ public abstract class OnionProxyManager {
             // Wait for the auth cookie file to be created/updated
             if(!cookieObserver.poll(COOKIE_TIMEOUT, MILLISECONDS)) {
                 log.warn("Auth cookie not created");
-                // FileUtilities.listFilesTolog(workingDirectory);
+              //  FileUtilities.listFilesTolog(workingDirectory);
                 return false;
             }
 

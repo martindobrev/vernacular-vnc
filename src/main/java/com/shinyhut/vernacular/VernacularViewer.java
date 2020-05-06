@@ -2,6 +2,7 @@ package com.shinyhut.vernacular;
 
 import com.shinyhut.vernacular.client.VernacularClient;
 import com.shinyhut.vernacular.client.VernacularConfig;
+import lombok.Data;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import msopentech.thali.toronionproxy.JavaOnionProxyContext;
@@ -37,6 +38,7 @@ import static javax.swing.JOptionPane.*;
 
 @Slf4j
 public class VernacularViewer extends JFrame {
+
 
     private VernacularConfig config;
     private VernacularClient client;
@@ -387,7 +389,6 @@ public class VernacularViewer extends JFrame {
             viewer.setVisible(true);
         });
     }
-
 
 
 

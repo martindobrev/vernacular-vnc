@@ -148,7 +148,10 @@ public class FileUtilities {
             throw new RuntimeException("Could not remove existing file " + fileToWriteTo.getName());
         }
         OutputStream out = new FileOutputStream(fileToWriteTo);
-        FileUtilities.copy(readFrom, out);
+        if (fileToWriteTo.exists()) {
+
+            FileUtilities.copy(readFrom, out);
+        }
     }
 
     public static void recursiveFileDelete(File fileOrDirectory) {
