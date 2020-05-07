@@ -13,7 +13,6 @@ See the Apache 2 License for the specific language governing permissions and lim
 
 package msopentech.thali.toronionproxy;
 
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +25,7 @@ import java.util.Map;
  * This class encapsulates data that is handled differently in Java and Android as well
  * as managing file locations.
  */
-@Slf4j
+//@Slf4j
 abstract public class OnionProxyContext {
     protected final static String hiddenserviceDirectoryName = "hiddenservice";
     protected final static String geoIpName = "geoip";

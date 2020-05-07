@@ -1,11 +1,10 @@
 package msopentech.thali.toronionproxy;
 
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.nio.file.Files;
 
-@Slf4j
+
 public class OnionProxyThread extends Thread {
   public void run() {
     String fileStorageLocation = "torfiles";
@@ -25,10 +24,10 @@ public class OnionProxyThread extends Thread {
     try {
       onionProxyManager.startWithRepeat(totalSecondsPerTorStartup, totalTriesPerTorStartup);
     } catch (InterruptedException e) {
-      log.error("INTERRUPTED EXCEPTION {}", e.getMessage());
+      //log.error("INTERRUPTED EXCEPTION {}", e.getMessage());
       e.printStackTrace();
     } catch (IOException e) {
-      log.error("IOException {}", e.getMessage());
+      //log.error("IOException {}", e.getMessage());
       e.printStackTrace();
     }
   }

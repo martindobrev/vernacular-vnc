@@ -2,9 +2,6 @@ package com.shinyhut.vernacular;
 
 import com.shinyhut.vernacular.client.VernacularClient;
 import com.shinyhut.vernacular.client.VernacularConfig;
-import lombok.Data;
-import lombok.extern.java.Log;
-import lombok.extern.slf4j.Slf4j;
 import msopentech.thali.toronionproxy.JavaOnionProxyContext;
 import msopentech.thali.toronionproxy.JavaOnionProxyManager;
 import msopentech.thali.toronionproxy.OnionProxyManager;
@@ -36,7 +33,6 @@ import static java.lang.System.exit;
 import static java.lang.Thread.sleep;
 import static javax.swing.JOptionPane.*;
 
-@Slf4j
 public class VernacularViewer extends JFrame {
 
 
@@ -379,7 +375,7 @@ public class VernacularViewer extends JFrame {
     }
 
     public static void main(String[] args) {
-        log.info("Starting tor...");
+        //log.info("Starting tor...");
 
         OnionProxyThread t = new OnionProxyThread();
         t.start();

@@ -30,7 +30,6 @@ See the Apache 2 License for the specific language governing permissions and lim
 package msopentech.thali.toronionproxy;
 
 
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +39,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * Watches to see if a particular file is changed
  */
-@Slf4j
 public class JavaWatchObserver implements WriteObserver {
     private WatchService watchService;
     private WatchKey key;
@@ -92,7 +90,7 @@ public class JavaWatchObserver implements WriteObserver {
 
                         if (kind == StandardWatchEventKinds.OVERFLOW ) {
 
-                            log.error("We got an overflow, there shouldn't have been enough activity to make that happen.");
+                            //log.error("We got an overflow, there shouldn't have been enough activity to make that happen.");
                             //System.out.println(//log.error("We got an overflow, there shouldn't have been enough activity to make that happen."););
                         }
 
@@ -107,7 +105,7 @@ public class JavaWatchObserver implements WriteObserver {
                     // In case we haven't yet gotten the event we are looking for we have to reset in order to
                     // receive any further notifications.
                     if (key.reset() == false) {
-                        log.error("The key became invalid which should not have happened.");
+                        //log.error("The key became invalid which should not have happened.");
                     }
                 }
 
@@ -131,7 +129,7 @@ public class JavaWatchObserver implements WriteObserver {
                 try {
                     watchService.close();
                 } catch (IOException e) {
-                    log.debug("Attempt to close watchService failed.", e);
+                    //log.debug("Attempt to close watchService failed.", e);
                 }
             }
         }

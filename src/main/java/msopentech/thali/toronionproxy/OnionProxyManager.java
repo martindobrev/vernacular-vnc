@@ -29,7 +29,6 @@ See the Apache 2 License for the specific language governing permissions and lim
 
 package msopentech.thali.toronionproxy;
 
-import lombok.extern.slf4j.Slf4j;
 import net.freehaven.tor.control.ConfigEntry;
 import net.freehaven.tor.control.TorControlConnection;
 
@@ -53,7 +52,6 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
  *
  * This class began life as TorPlugin from the Briar Project
  */
-@Slf4j
 public abstract class OnionProxyManager {
     private static final String[] EVENTS = {
             "CIRC", "ORCONN", "NOTICE", "WARN", "ERR"
@@ -173,7 +171,7 @@ public abstract class OnionProxyManager {
             throw new RuntimeException("Sorry, only one hidden service to a customer and we already have one. Please send complaints to https://github.com/thaliproject/Tor_Onion_Proxy_Library/issues/5 with your scenario so we can justify fixing this.");
         }
 
-        log.debug("Creating hidden service");
+        //log.debug("Creating hidden service");
         File hostnameFile = onionProxyContext.getHostNameFile();
 
         if (hostnameFile.getParentFile().exists() == false &&
@@ -201,7 +199,7 @@ public abstract class OnionProxyManager {
 
         // Publish the hidden service's onion hostname in transport properties
         String hostname = new String(FileUtilities.read(hostnameFile), "UTF-8").trim();
-        log.debug("Hidden service config has completed.");
+        //log.debug("Hidden service config has completed.");
 
         return hostname;
     }
@@ -216,7 +214,7 @@ public abstract class OnionProxyManager {
             if (controlConnection == null) {
                 return;
             }
-            log.debug("Stopping Tor");
+            //log.debug("Stopping Tor");
             controlConnection.setConf("DisableNetwork", "1");
             controlConnection.shutdownTor("TERM");
         } finally {
@@ -246,7 +244,7 @@ public abstract class OnionProxyManager {
         if(controlConnection == null) {
             throw new RuntimeException("Tor is not running!");
         }
-        log.debug("Enabling network: " + enable);
+        //log.debug("Enabling network: " + enable);
         controlConnection.setConf("DisableNetwork", enable ? "0" : "1");
     }
 
@@ -288,11 +286,11 @@ public abstract class OnionProxyManager {
         try {
             phase = controlConnection.getInfo("status/bootstrap-phase");
         } catch (IOException e) {
-            log.warn("Control connection is not responding properly to getInfo", e);
+            //log.warn("Control connection is not responding properly to getInfo", e);
         }
 
         if(phase != null && phase.contains("PROGRESS=100")) {
-            log.debug("Tor has already bootstrapped");
+            //log.debug("Tor has already bootstrapped");
             return true;
         }
 
@@ -311,17 +309,17 @@ public abstract class OnionProxyManager {
         // The Tor OP will die if it looses the connection to its socket so if there is no controlSocket defined
         // then Tor is dead. This assumes, of course, that takeOwnership works and we can't end up with Zombies.
         if (controlConnection != null) {
-            log.debug("Tor is already running");
+            //log.debug("Tor is already running");
             return true;
         }
 
         // The code below is why this method is synchronized, we don't want two instances of it running at once
         // as the result would be a mess of screwed up files and connections.
-        log.debug("Tor is not running");
+        //log.debug("Tor is not running");
 
         installAndConfigureFiles();
 
-        log.debug("Starting Tor");
+        //log.debug("Starting Tor");
         File cookieFile = onionProxyContext.getCookieFile();
         if (cookieFile.getParentFile().exists() == false &&
                 cookieFile.getParentFile().mkdirs() == false) {
@@ -365,14 +363,14 @@ public abstract class OnionProxyManager {
                 int exit = torProcess.waitFor();
                 torProcess = null;
                 if(exit != 0) {
-                    log.warn("Tor exited with value " + exit);
+                    //log.warn("Tor exited with value " + exit);
                     return false;
                 }
             }
 
             // Wait for the auth cookie file to be created/updated
             if(!cookieObserver.poll(COOKIE_TIMEOUT, MILLISECONDS)) {
-                log.warn("Auth cookie not created");
+                //log.warn("Auth cookie not created");
               //  FileUtilities.listFilesTolog(workingDirectory);
                 return false;
             }
@@ -395,10 +393,10 @@ public abstract class OnionProxyManager {
             this.controlConnection = controlConnection;
             return true;
         } catch(SecurityException e) {
-            log.warn(e.toString(), e);
+            //log.warn(e.toString(), e);
             return false;
         } catch(InterruptedException e) {
-            log.warn("Interrupted while starting Tor", e);
+            //log.warn("Interrupted while starting Tor", e);
             Thread.currentThread().interrupt();
             return false;
         } finally {
@@ -428,7 +426,7 @@ public abstract class OnionProxyManager {
                 try {
                     while(scanner.hasNextLine()) {
                         if (stdError) {
-                            log.error(scanner.nextLine());
+                            //log.error(scanner.nextLine());
                         } else {
                             String nextLine = scanner.nextLine();
                             // We need to find the line where it tells us what the control port is.
@@ -441,14 +439,14 @@ public abstract class OnionProxyManager {
                                                 nextLine.substring(nextLine.lastIndexOf(" ") + 1, nextLine.length() - 1));
                                 countDownLatch.countDown();
                             }
-                            log.debug(nextLine);
+                            //log.debug(nextLine);
                         }
                     }
                 } finally {
                     try {
                         inputStream.close();
                     } catch (IOException e) {
-                        log.error("Couldn't close input stream in eatStream", e);
+                        //log.error("Couldn't close input stream in eatStream", e);
                     }
                 }
             }

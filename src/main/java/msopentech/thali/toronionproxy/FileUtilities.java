@@ -68,13 +68,11 @@ http://www.gnu.org/licenses/lgpl.html
 package msopentech.thali.toronionproxy;
 
 
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-@Slf4j
 public class FileUtilities {
 
 
@@ -117,7 +115,7 @@ public class FileUtilities {
                 listFilesToLog(child);
             }
         } else {
-           log.info(f.getAbsolutePath());
+           //log.info(f.getAbsolutePath());
         }
     }
 
