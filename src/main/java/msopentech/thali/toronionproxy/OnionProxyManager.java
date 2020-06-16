@@ -336,6 +336,7 @@ public abstract class OnionProxyManager {
         }
 
         File workingDirectory = onionProxyContext.getWorkingDirectory();
+        System.out.println("Working dir is: " + workingDirectory.getPath());
         // Watch for the auth cookie file being created/updated
         WriteObserver cookieObserver = onionProxyContext.generateWriteObserver(cookieFile);
         // Start a new Tor process
@@ -434,6 +435,8 @@ public abstract class OnionProxyManager {
                             // We need to find the line where it tells us what the control port is.
                             // The line that will appear in stdio with the control port looks like:
                             // Control listener listening on port 39717.
+
+                            System.out.println("Next line is: " + nextLine);
                             if (nextLine.contains("Control listener listening on port ")) {
                                 // For the record, I hate regex so I'm doing this manually
                                 control_port =

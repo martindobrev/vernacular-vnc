@@ -268,6 +268,7 @@ public class VernacularClient {
         System.setProperty("socksProxyPort", "9050");
 
         Socket socket = new Socket(host, port);
+
         InputStream in = new BufferedInputStream(socket.getInputStream());
         OutputStream out = socket.getOutputStream();
         session = new VncSession(config, in, out);
